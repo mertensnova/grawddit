@@ -4,9 +4,9 @@
 typedef struct student
 {
     int id;
-    char age[50];
     char name[60];
-    char mail_id[19];
+    char age[10];
+    char mail_id[29];
     char room_no[8];
     char phone[12];
     char hostel_name[8];
@@ -17,7 +17,6 @@ typedef struct student
 
 void set_time();
 
-void take_input(char *str);
 
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert);
 
@@ -32,5 +31,7 @@ Node *create_student_node();
 Node *read_students_from_file();
 
 int random_id();
+
+void *find_student_by_name();
 
 #endif

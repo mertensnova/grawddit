@@ -15,9 +15,10 @@ int main(void)
     printf("\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n\n");
     printf("\t\t\t\t<1> Add a new student: \n\n");
     printf("\t\t\t\t<2> View all students: \n\n");
-    printf("\t\t\t\t<3> Add a new student: \n\n");
+    printf("\t\t\t\t<3> Search a student: \n\n");
     printf("\t\t\t\t<4> Add a new student: \n\n");
     printf("\t\t\t\t<5> Add a new student: \n\n");
+    printf("\t\t\t\t<6> Exit Program: \n\n");
 
     printf("\t\t\t\tChoose a number: ");
     scanf("%d", &choice);
@@ -26,15 +27,18 @@ int main(void)
     {
     case 1:
         system("cls");
-
         tmp = create_student_node();
         head = insert_student_node_at_head(head, tmp);
-
         add_student_node_to_file(head);
         break;
     case 2:
+        system("cls");
         Node *new_head = read_students_from_file(head);
         print_list(new_head);
+        break;
+    case 3:
+        system("cls");
+        find_student_by_name();
         break;
 
     default:
