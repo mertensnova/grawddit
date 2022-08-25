@@ -11,6 +11,25 @@ int random_id()
     return RandIndex;
 }
 
+char take_input()
+{
+    // char str[100], ch;
+    // int c = 0;
+    // // printf("Enter the line: \n");
+    // do
+    // {
+    //     ch = getchar();
+    //     str[c] = ch;
+    //     c++;
+    // } while (ch != '\n');
+
+    // c = c - 1;
+    // str[c] = '\0';
+    // printf("%s \n", str);
+
+    // return str;
+}
+
 Node *create_student_node()
 {
     Node *new = malloc(sizeof(Node));
@@ -23,35 +42,36 @@ Node *create_student_node()
     printf("\t\nEnter a name: ");
     getchar();
     fgets(new->name, 50, stdin);
-    new->name[strlen(new->name) - 1] = '\0';
+
+    new->name[strlen(new->name) - 0];
 
     printf("\t\nEnter an age: ");
     getchar();
     fgets(new->age, 50, stdin);
-    new->age[strlen(new->age) - 1] = '\0';
+    new->age[strlen(new->age) - 0];
 
     printf("\t\nEnter an email: ");
     getchar();
     fgets(new->mail_id, 50, stdin);
-    new->mail_id[strlen(new->mail_id) - 1] = '\0';
+    new->mail_id[strlen(new->mail_id) - 0] = '\0';
 
     printf("\t\nEnter a room no.: ");
     getchar();
     fgets(new->room_no, 50, stdin);
-    new->room_no[strlen(new->room_no) - 1] = '\0';
+    new->room_no[strlen(new->room_no)] = '\0';
 
     printf("\t\nEnter a phone: ");
     getchar();
     fgets(new->phone, 50, stdin);
-    new->phone[strlen(new->phone) - 1] = '\0';
+    new->phone[strlen(new->phone)] = '\0';
 
     printf("\t\nEnter a hostel name from BH-1, GH-1, DH-1: ");
     getchar();
     fgets(new->hostel_name, 50, stdin);
-    new->hostel_name[strlen(new->hostel_name) - 1] = '\0';
+    new->hostel_name[strlen(new->hostel_name)] = '\0';
 
     strcpy(new->created_at, asctime(tm));
-    new->created_at[strlen(new->created_at) - 1] = '\0';
+    new->created_at[strlen(new->created_at)] = '\0';
     printf("\t\nCreated at: %s", new->created_at);
 
     new->next = NULL;
@@ -69,7 +89,7 @@ void *find_student_by_name()
     printf("\nEnter the name: ");
     getchar();
     fgets(name, 30, stdin);
-    name[strlen(name) - 1] = '\0';
+    name[strlen(name)] = '\0';
 
     while (strcmp(new_head->name, name) != 0)
         new_head = new_head->next;
@@ -85,6 +105,68 @@ void *find_student_by_name()
     printf("Hostel Name:%s \n", new_head->hostel_name);
     printf("Created At:%s \n", new_head->created_at);
 };
+
+void *find_student_by_id()
+{
+    Node *new_head = read_students_from_file();
+    int id;
+
+    printf("\nEnter the id: ");
+    scanf("%d", &id);
+
+    while (new_head->id != id)
+        new_head = new_head->next;
+
+    printf("Student Found\n");
+    printf("-----------------------------------------------------------------------------------------\n");
+    printf("ID: %d\n", new_head->id);
+    printf("Name:%s \n", new_head->name);
+    printf("Age:%s \n", new_head->age);
+    printf("Email:%s \n", new_head->mail_id);
+    printf("Room Number:%s \n", new_head->room_no);
+    printf("Phone:%s \n", new_head->phone);
+    printf("Hostel Name:%s \n", new_head->hostel_name);
+    printf("Created At:%s \n", new_head->created_at);
+};
+
+void *delete_student_by_name(Node **head)
+{
+    // Node *new_head = read_students_from_file();
+    char name[20];
+    Node *tmp = *head, *prev;
+
+    printf("\nEnter the name: ");
+    getchar();
+    fgets(name, 30, stdin);
+    name[strlen(name)] = '\0';
+
+    if (tmp != NULL && strcmp(tmp->name, name) == 0)
+    {
+        *head = tmp->next; // Changed head
+        free(tmp);         // free old head
+        remove("Students.dat");
+        FILE *file = fopen("Students.dat", "a");
+        fwrite(&tmp, sizeof(Node), 1, file);
+        printf("Student was deleted.\n");
+    }
+
+    while (tmp != NULL && strcmp(tmp->name, name) != 0)
+    {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+
+    prev->next = tmp->next;
+
+    free(tmp);
+
+    remove("Students.dat");
+    FILE *file = fopen("Students.dat", "a");
+    fwrite(&tmp, sizeof(Node), 1, file);
+
+    printf("Student was deleted. \n");
+    // print_list(tmp);
+}
 
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert)
 {
@@ -107,17 +189,17 @@ void *print_list(Node *head)
 
     while (tmp != NULL)
     {
+        // printf("%d->", tmp->id);
 
-        printf("\tID\tName\tAge\tEmail\tRoom No.\tPhone\tHostel Name\tCreated At\n");
         printf("-----------------------------------------------------------------------------------------\n");
-        printf("%9d", tmp->id);
-        printf("%9s", tmp->name);
-        printf("%9s", tmp->age);
-        printf("%9s", tmp->mail_id);
-        printf("%9s", tmp->room_no);
-        printf("%9s", tmp->phone);
-        printf("%9s", tmp->hostel_name);
-        printf("%9s", tmp->created_at);
+        printf("ID: %d\n", tmp->id);
+        printf("NAME: %s \n", tmp->name);
+        printf("AGE: %s \n", tmp->age);
+        printf("EMAIL: %s \n", tmp->mail_id);
+        printf("ROOM NUMBER: %s \n", tmp->room_no);
+        printf("PHONE: %s \n", tmp->phone);
+        printf("HOSTEL NAME: %s \n", tmp->hostel_name);
+        printf("CREATED AT: %s \n", tmp->created_at);
         tmp = tmp->next;
     }
 }
