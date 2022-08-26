@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 #include "linked_list.h"
 
 int random_id()
@@ -11,6 +12,16 @@ int random_id()
     return RandIndex;
 }
 
+void take_input(char *str)
+{
+    int ch;
+    for (ch = getchar(); isspace(ch); ch = getchar())
+        ;
+
+    ungetc(ch, stdin);
+    fgets(str, 50, stdin);
+}
+
 Node *create_student_node()
 {
     Node *new = malloc(sizeof(Node));
@@ -18,38 +29,25 @@ Node *create_student_node()
     struct tm *tm = localtime(&t);
 
     new->id = random_id();
-    printf("\t\nEnter an ID: %d\n", new->id);
+    printf("\t\nStudent's ID: %d\n", new->id);
 
     printf("\t\nEnter a name: ");
-    getchar();
-    fgets(new->name, 50, stdin);
-
-    new->name[strlen(new->name) - 0];
+    take_input(new->name);
 
     printf("\t\nEnter an age: ");
-    getchar();
-    fgets(new->age, 50, stdin);
-    new->age[strlen(new->age) - 0];
+    take_input(new->age);
 
     printf("\t\nEnter an email: ");
-    getchar();
-    fgets(new->mail_id, 50, stdin);
-    new->mail_id[strlen(new->mail_id) - 0] = '\0';
+    take_input(new->mail_id);
 
     printf("\t\nEnter a room no.: ");
-    getchar();
-    fgets(new->room_no, 50, stdin);
-    new->room_no[strlen(new->room_no)] = '\0';
+    take_input(new->room_no);
 
     printf("\t\nEnter a phone: ");
-    getchar();
-    fgets(new->phone, 50, stdin);
-    new->phone[strlen(new->phone)] = '\0';
+    take_input(new->phone);
 
     printf("\t\nEnter a hostel name from BH-1, GH-1, DH-1: ");
-    getchar();
-    fgets(new->hostel_name, 50, stdin);
-    new->hostel_name[strlen(new->hostel_name)] = '\0';
+    take_input(new->hostel_name);
 
     strcpy(new->created_at, asctime(tm));
     new->created_at[strlen(new->created_at)] = '\0';
@@ -68,9 +66,7 @@ void *find_student_by_name()
     char name[20];
 
     printf("\nEnter the name: ");
-    getchar();
-    fgets(name, 30, stdin);
-    name[strlen(name)] = '\0';
+    take_input(name);
 
     while (strcmp(new_head->name, name) != 0)
         new_head = new_head->next;
@@ -116,9 +112,7 @@ void *delete_student_by_name(Node **head)
     Node *tmp = *head, *prev;
 
     printf("\nEnter the name: ");
-    getchar();
-    fgets(name, 30, stdin);
-    name[strlen(name)] = '\0';
+    take_input(name);
 
     if (tmp != NULL && strcmp(tmp->name, name) == 0)
     {
@@ -173,15 +167,109 @@ void *delete_student_by_id(Node **head)
     remove("Students.dat");
     add_student_node_to_file(tmp);
 }
-// void *update_student(Node *head)
-// {
-//     Node *tmp = head;
+void *update_student_by_name(Node *head)
+{
+    Node *tmp = head;
+    char student_name[20];
+    char name[60];
+    char age[10];
+    char mail_id[29];
+    char room_no[8];
+    char phone[12];
+    char hostel_name[8];
 
-//     while (tmp->numbers != value)
-//         tmp = tmp->next;
+    printf("\nEnter the name: ");
+    take_input(student_name);
 
-//     tmp->numbers = new_value;
-// }
+    while (strcmp(tmp->name, student_name) != 0)
+        tmp = tmp->next;
+
+    printf("OLD RECORD\n");
+    print_list(tmp);
+
+    printf("\t\nNew name: ");
+    take_input(name);
+
+    printf("\t\nNew age: ");
+    take_input(age);
+
+    printf("\t\nNew email: ");
+    take_input(mail_id);
+
+    printf("\t\nNew room no.: ");
+    take_input(room_no);
+
+    printf("\t\nNew phone: ");
+    take_input(phone);
+
+    printf("\t\nNew hostel name from BH-1, GH-1, DH-1: ");
+    take_input(hostel_name);
+
+    strcpy(tmp->name, name);
+    strcpy(tmp->age, age);
+    strcpy(tmp->mail_id, mail_id);
+    strcpy(tmp->room_no, room_no);
+    strcpy(tmp->phone, phone);
+    strcpy(tmp->hostel_name, hostel_name);
+
+    printf("New RECORD\n");
+    print_list(tmp);
+
+    remove("Students.dat");
+    add_student_node_to_file(tmp);
+}
+
+void *update_student_by_id(Node *head)
+{
+    Node *tmp = head;
+    char student_id[20];
+    char name[60];
+    char age[10];
+    char mail_id[29];
+    char room_no[8];
+    char phone[12];
+    char hostel_name[8];
+
+    printf("\nEnter the ID: ");
+    scanf("%d", &student_id);
+
+    while (strcmp(tmp->name, student_id) != 0)
+        tmp = tmp->next;
+
+    printf("OLD RECORD\n");
+    print_list(tmp);
+
+    printf("\t\nNew name: ");
+    take_input(name);
+
+    printf("\t\nNew age: ");
+    take_input(age);
+
+    printf("\t\nNew email: ");
+    take_input(mail_id);
+
+    printf("\t\nNew room no.: ");
+    take_input(room_no);
+
+    printf("\t\nNew phone: ");
+    take_input(phone);
+
+    printf("\t\nNew hostel name from BH-1, GH-1, DH-1: ");
+    take_input(hostel_name);
+
+    strcpy(tmp->name, name);
+    strcpy(tmp->age, age);
+    strcpy(tmp->mail_id, mail_id);
+    strcpy(tmp->room_no, room_no);
+    strcpy(tmp->phone, phone);
+    strcpy(tmp->hostel_name, hostel_name);
+
+    printf("New RECORD\n");
+    print_list(tmp);
+
+    remove("Students.dat");
+    add_student_node_to_file(tmp);
+}
 
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert)
 {

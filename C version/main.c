@@ -7,7 +7,9 @@ int main(void)
 {
     Node *head = NULL;
     Node *tmp = NULL;
+    // Node *new_head = read_students_from_file();
     int choice;
+
     system("cls");
 
     printf("\t\t\t\t--------------------------- Hostel Managment System -------------------------------\t\n");
@@ -35,9 +37,8 @@ int main(void)
         break;
     case 2:
         system("cls");
-
-        Node *new_head = read_students_from_file();
-        print_list(new_head);
+        Node *new_head_1 = read_students_from_file();
+        print_list(new_head_1);
         break;
     case 3:
         system("cls");
@@ -51,21 +52,37 @@ int main(void)
 
         if (strcmp(choice, "id") == 0)
             find_student_by_id();
+
         break;
 
     case 4:
         system("cls");
         char choice1[20];
-        Node *new_head1 = read_students_from_file(head);
+        Node *new_head_2 = read_students_from_file();
 
         printf("Delete student by name or id: ");
         scanf("%s", &choice1);
 
         if (strcmp(choice1, "name") == 0)
-            delete_student_by_name(&new_head1);
+            delete_student_by_name(&new_head_2);
 
         if (strcmp(choice1, "id") == 0)
-            find_student_by_id();
+            delete_student_by_id(&new_head_2);
+        break;
+
+    case 5:
+        system("cls");
+        char choice2[20];
+        Node *new_head_3 = read_students_from_file();
+
+        printf("Updatestudent by name or id: ");
+        scanf("%s", &choice1);
+
+        if (strcmp(choice1, "name") == 0)
+            update_student_by_name(new_head_3);
+
+        if (strcmp(choice1, "id") == 0)
+            update_student_by_id(new_head_3);
         break;
 
     default:

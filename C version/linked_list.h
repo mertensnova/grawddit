@@ -16,6 +16,7 @@ typedef struct student
 } Node;
 
 void set_time();
+void take_input();
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert);
 void *insert_student_node_at_tail(Node *head, Node *node_to_insert);
 void *print_list(Node *head);
@@ -27,7 +28,8 @@ void *find_student_by_name();
 void *find_student_by_id();
 void *delete_student_by_name(Node **head);
 void *delete_student_by_id(Node **head);
-void *update_student(Node *head);
-char take_input();
+void *update_student_by_name(Node *head);
+void *update_student_by_id(Node *head);
+void take_input();
 
 #endif
