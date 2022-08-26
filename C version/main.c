@@ -12,17 +12,17 @@ int main(void)
 
     system("cls");
 
-    printf("\t\t\t\t--------------------------- Hostel Managment System -------------------------------\t\n");
-    printf("\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+    printf("\n\n\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb HOSTEL MANAGMENT SYSTEM \xdb\xdb\xdb\xdb\xdb\xdb");
     printf("\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n\n");
-    printf("\t\t\t\t<1> Add a new student: \n\n");
-    printf("\t\t\t\t<2> View all students: \n\n");
-    printf("\t\t\t\t<3> Search a student: \n\n");
-    printf("\t\t\t\t<4> Delete a student: \n\n");
-    printf("\t\t\t\t<5> Update a student: \n\n");
-    printf("\t\t\t\t<6> Exit Program: \n\n");
+    printf("\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n\n\n");
+    printf("<1> Add a new student: \n\n");
+    printf("<2> View all students: \n\n");
+    printf("<3> Search a student: \n\n");
+    printf("<4> Delete a student: \n\n");
+    printf("<5> Update a student: \n\n");
+    printf("<6> Exit Program: \n\n");
 
-    printf("\t\t\t\tChoose a number: ");
+    printf("Choose a number: ");
     scanf("%d", &choice);
 
     switch (choice)
