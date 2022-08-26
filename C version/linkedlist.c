@@ -11,25 +11,6 @@ int random_id()
     return RandIndex;
 }
 
-char take_input()
-{
-    // char str[100], ch;
-    // int c = 0;
-    // // printf("Enter the line: \n");
-    // do
-    // {
-    //     ch = getchar();
-    //     str[c] = ch;
-    //     c++;
-    // } while (ch != '\n');
-
-    // c = c - 1;
-    // str[c] = '\0';
-    // printf("%s \n", str);
-
-    // return str;
-}
-
 Node *create_student_node()
 {
     Node *new = malloc(sizeof(Node));
@@ -131,7 +112,6 @@ void *find_student_by_id()
 
 void *delete_student_by_name(Node **head)
 {
-    // Node *new_head = read_students_from_file();
     char name[20];
     Node *tmp = *head, *prev;
 
@@ -142,13 +122,14 @@ void *delete_student_by_name(Node **head)
 
     if (tmp != NULL && strcmp(tmp->name, name) == 0)
     {
-        *head = tmp->next; // Changed head
-        free(tmp);         // free old head
+        *head = tmp->next;
+        free(tmp);
         remove("Students.dat");
-        FILE *file = fopen("Students.dat", "a");
-        fwrite(&tmp, sizeof(Node), 1, file);
-        printf("Student was deleted.\n");
+        add_student_node_to_file(tmp);
     }
+
+    if (tmp == NULL)
+        printf("List empty");
 
     while (tmp != NULL && strcmp(tmp->name, name) != 0)
     {
@@ -157,16 +138,50 @@ void *delete_student_by_name(Node **head)
     }
 
     prev->next = tmp->next;
-
     free(tmp);
-
     remove("Students.dat");
-    FILE *file = fopen("Students.dat", "a");
-    fwrite(&tmp, sizeof(Node), 1, file);
-
-    printf("Student was deleted. \n");
-    // print_list(tmp);
+    add_student_node_to_file(tmp);
 }
+
+void *delete_student_by_id(Node **head)
+{
+    char id;
+    Node *tmp = *head, *prev;
+
+    printf("\nEnter the name: ");
+    scanf("%d", &id);
+
+    if (tmp != NULL && id == tmp->id)
+    {
+        *head = tmp->next;
+        free(tmp);
+        remove("Students.dat");
+        add_student_node_to_file(tmp);
+    }
+
+    if (tmp == NULL)
+        printf("List empty");
+
+    while (tmp != NULL && id != tmp->id)
+    {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+
+    prev->next = tmp->next;
+    free(tmp);
+    remove("Students.dat");
+    add_student_node_to_file(tmp);
+}
+// void *update_student(Node *head)
+// {
+//     Node *tmp = head;
+
+//     while (tmp->numbers != value)
+//         tmp = tmp->next;
+
+//     tmp->numbers = new_value;
+// }
 
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert)
 {
@@ -189,7 +204,6 @@ void *print_list(Node *head)
 
     while (tmp != NULL)
     {
-        // printf("%d->", tmp->id);
 
         printf("-----------------------------------------------------------------------------------------\n");
         printf("ID: %d\n", tmp->id);

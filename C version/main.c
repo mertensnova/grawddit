@@ -58,14 +58,14 @@ int main(void)
         char choice1[20];
         Node *new_head1 = read_students_from_file(head);
 
-        // printf("Delete student by name or id: ");
-        // scanf("%s", &choice1);
+        printf("Delete student by name or id: ");
+        scanf("%s", &choice1);
 
-        // if (strcmp(choice1, "name") == 0)
+        if (strcmp(choice1, "name") == 0)
             delete_student_by_name(&new_head1);
 
-        // if (strcmp(choice1, "id") == 0)
-        // find_student_by_id();
+        if (strcmp(choice1, "id") == 0)
+            find_student_by_id();
         break;
 
     default:

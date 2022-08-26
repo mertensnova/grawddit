@@ -26,7 +26,8 @@ int random_id();
 void *find_student_by_name();
 void *find_student_by_id();
 void *delete_student_by_name(Node **head);
-void delete_student_by_id();
+void *delete_student_by_id(Node **head);
+void *update_student(Node *head);
 char take_input();
 
 #endif
