@@ -12,6 +12,113 @@ int random_id()
     return RandIndex;
 }
 
+void main_menu(void)
+{
+    Node *head = NULL;
+    Node *tmp = NULL;
+    int choice;
+
+    system("cls");
+
+    printf("\n\n\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb HOSTEL MANAGMENT SYSTEM \xdb\xdb\xdb\xdb\xdb\xdb");
+    printf("\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n\n");
+    printf("\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n\n\n");
+    printf("<1> Add a new student: \n\n");
+    printf("<2> View all students: \n\n");
+    printf("<3> Search a student: \n\n");
+    printf("<4> Delete a student: \n\n");
+    printf("<5> Update a student: \n\n");
+    printf("<6> Exit Program: \n\n");
+
+    printf("Choose a number: ");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        system("cls");
+
+        tmp = create_student_node();
+        head = insert_student_node_at_head(head, tmp);
+
+        add_student_node_to_file(head);
+        break;
+    case 2:
+        system("cls");
+        Node *new_head_1 = read_students_from_file();
+        print_list(new_head_1);
+
+        break;
+    case 3:
+        system("cls");
+        char choice[20];
+
+        printf("Find by name or id: ");
+        scanf("%s", &choice);
+
+        if (strcmp(choice, "name") == 0)
+            find_student_by_name();
+
+        if (strcmp(choice, "id") == 0)
+            find_student_by_id();
+
+        printf("Wrong choice.\nTry again");
+        printf("Press Enter to Continue...");
+        getchar();
+        main_menu();
+
+        break;
+
+    case 4:
+        system("cls");
+        char choice1[20];
+        Node *new_head_2 = read_students_from_file();
+
+        printf("Delete student by name or id: ");
+        scanf("%s", &choice1);
+
+        if (strcmp(choice1, "name") == 0)
+            delete_student_by_name(&new_head_2);
+
+        if (strcmp(choice1, "id") == 0)
+            delete_student_by_id(&new_head_2);
+        else
+        {
+            printf("Wrong choice.\nTry again");
+            printf("Press Enter to Continue...");
+            getchar();
+            main_menu();
+        }
+
+        break;
+
+    case 5:
+        system("cls");
+        char choice2[20];
+        Node *new_head_3 = read_students_from_file();
+
+        printf("Update student by name or id: ");
+        scanf("%s", &choice1);
+
+        if (strcmp(choice1, "name") == 0)
+            update_student_by_name(new_head_3);
+
+        if (strcmp(choice1, "id") == 0)
+            update_student_by_id(new_head_3);
+
+        printf("Wrong choice.\nTry again");
+        printf("Press Enter to Continue...");
+        getchar();
+        main_menu();
+
+        break;
+
+    default:
+        exit(1);
+        break;
+    }
+}
+
 void take_input(char *str)
 {
     int ch;
@@ -54,8 +161,7 @@ Node *create_student_node()
     printf("\t\nCreated at: %s", new->created_at);
 
     new->next = NULL;
-
-    printf("\t\n%s was added successfully", new->name);
+    printf("Student was added.\n\n\n");
 
     return new;
 };
@@ -81,6 +187,10 @@ void *find_student_by_name()
     printf("Phone:%s \n", new_head->phone);
     printf("Hostel Name:%s \n", new_head->hostel_name);
     printf("Created At:%s \n", new_head->created_at);
+
+    printf("\n\nPress Enter to Continue...");
+    getchar();
+    main_menu();
 };
 
 void *find_student_by_id()
@@ -104,69 +214,100 @@ void *find_student_by_id()
     printf("Phone:%s \n", new_head->phone);
     printf("Hostel Name:%s \n", new_head->hostel_name);
     printf("Created At:%s \n", new_head->created_at);
+
+    printf("\n\nPress Enter to Continue...");
+    getchar();
+    main_menu();
 };
 
 void *delete_student_by_name(Node **head)
 {
     char name[20];
-    Node *tmp = *head, *prev;
+    Node *tmp = *head;
+    Node *curr = *head;
+    Node *prev = *head;
 
     printf("\nEnter the name: ");
     take_input(name);
 
     if (tmp != NULL && strcmp(tmp->name, name) == 0)
     {
-        *head = tmp->next;
-        free(tmp);
+        *head = curr->next;
+        free(curr);
+        curr = NULL;
         remove("Students.dat");
-        add_student_node_to_file(tmp);
+        add_student_node_to_file(*head);
+        printf("Student has been deleted");
     }
-
-    if (tmp == NULL)
-        printf("List empty");
 
     while (tmp != NULL && strcmp(tmp->name, name) != 0)
     {
-        prev = tmp;
+        prev = curr;
+        curr = curr->next;
         tmp = tmp->next;
     }
 
-    prev->next = tmp->next;
-    free(tmp);
+    if (tmp == NULL)
+    {
+        printf("Student not found.\nTry again\n.");
+        printf("Press Enter to Continue...");
+        getchar();
+
+        main_menu();
+    }
+
+    prev->next = curr->next;
+    free(curr);
+    curr = NULL;
+    printf("Student has been deleted");
     remove("Students.dat");
-    add_student_node_to_file(tmp);
+    add_student_node_to_file(*head);
 }
 
 void *delete_student_by_id(Node **head)
 {
     char id;
-    Node *tmp = *head, *prev;
+    Node *tmp = *head;
+    Node *curr = *head;
+    Node *prev = *head;
 
     printf("\nEnter the name: ");
     scanf("%d", &id);
 
     if (tmp != NULL && id == tmp->id)
     {
-        *head = tmp->next;
-        free(tmp);
+        printf("Student have been found");
+        *head = curr->next;
+        free(curr);
+        curr = NULL;
         remove("Students.dat");
-        add_student_node_to_file(tmp);
+        add_student_node_to_file(*head);
+        printf("Student has been deleted");
     }
 
-    if (tmp == NULL)
-        printf("List empty");
-
-    while (tmp != NULL && id != tmp->id)
+    while (tmp != NULL && tmp->id != id)
     {
-        prev = tmp;
+        prev = curr;
+        curr = curr->next;
         tmp = tmp->next;
     }
+    if (tmp == NULL)
+    {
+        printf("Student not found.\nTry again\n.");
+        printf("Press Enter to Continue...");
+        getchar();
 
-    prev->next = tmp->next;
-    free(tmp);
+        main_menu();
+    }
+
+    prev->next = curr->next;
+    free(curr);
+    curr = NULL;
+    printf("Student has been deleted");
     remove("Students.dat");
-    add_student_node_to_file(tmp);
+    add_student_node_to_file(*head);
 }
+
 void *update_student_by_name(Node *head)
 {
     Node *tmp = head;
@@ -182,10 +323,11 @@ void *update_student_by_name(Node *head)
     take_input(student_name);
 
     while (strcmp(tmp->name, student_name) != 0)
+    {
+        printf("OLD RECORD\n");
+        print_list(tmp);
         tmp = tmp->next;
-
-    printf("OLD RECORD\n");
-    print_list(tmp);
+    }
 
     printf("\t\nNew name: ");
     take_input(name);
@@ -216,7 +358,7 @@ void *update_student_by_name(Node *head)
     print_list(tmp);
 
     remove("Students.dat");
-    add_student_node_to_file(tmp);
+    add_student_node_to_file(head);
 }
 
 void *update_student_by_id(Node *head)
@@ -234,10 +376,11 @@ void *update_student_by_id(Node *head)
     scanf("%d", &student_id);
 
     while (strcmp(tmp->name, student_id) != 0)
+    {
+        printf("OLD RECORD\n");
+        print_list(tmp);
         tmp = tmp->next;
-
-    printf("OLD RECORD\n");
-    print_list(tmp);
+    }
 
     printf("\t\nNew name: ");
     take_input(name);
@@ -268,7 +411,7 @@ void *update_student_by_id(Node *head)
     print_list(tmp);
 
     remove("Students.dat");
-    add_student_node_to_file(tmp);
+    add_student_node_to_file(head);
 }
 
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert)
@@ -294,7 +437,7 @@ void *print_list(Node *head)
     {
 
         printf("-----------------------------------------------------------------------------------------\n");
-        printf("ID: %d\n", tmp->id);
+        printf("ID: %d \n", tmp->id);
         printf("NAME: %s \n", tmp->name);
         printf("AGE: %s \n", tmp->age);
         printf("EMAIL: %s \n", tmp->mail_id);
@@ -340,7 +483,9 @@ Node *read_students_from_file()
     if (file == NULL)
     {
         fprintf(stderr, "\nCouldn't Open File'\n");
-        exit(1);
+        printf("Press Enter to Continue...");
+        getchar();
+        main_menu();
     }
 
     while (fread(tmp, sizeof(Node), 1, file))

@@ -31,5 +31,6 @@ void *delete_student_by_id(Node **head);
 void *update_student_by_name(Node *head);
 void *update_student_by_id(Node *head);
 void take_input();
+void main_menu(void);
 
 #endif
