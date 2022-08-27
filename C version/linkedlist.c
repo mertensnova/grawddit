@@ -3,9 +3,10 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <unistd.h>
 #include "linked_list.h"
 
-int random_id()
+int random_id(void)
 {
     srand(time(NULL));
     int RandIndex = rand() % 999;
@@ -139,7 +140,7 @@ void take_input(char *str)
     fgets(str, 50, stdin);
 }
 
-Node *create_student_node()
+Node *create_student_node(void)
 {
     Node *new = malloc(sizeof(Node));
     time_t t = time(NULL);
@@ -176,16 +177,25 @@ Node *create_student_node()
     return new;
 };
 
-void *find_student_by_name()
+void *find_student_by_name(void)
 {
     Node *new_head = read_students_from_file();
     char name[20];
+    int found = 1;
+    Node *tmp = new_head;
 
     printf("\nEnter the name: ");
     take_input(name);
 
     while (strcmp(new_head->name, name) != 0)
         new_head = new_head->next;
+
+    if (new_head == NULL)
+    {
+        printf("Student not found\n");
+        system("pause");
+        main_menu();
+    }
 
     printf("Student Found\n");
     printf("-----------------------------------------------------------------------------------------\n");
@@ -200,11 +210,12 @@ void *find_student_by_name()
 
     system("pause");
     main_menu();
-};
+}
 
-void *find_student_by_id()
+void *find_student_by_id(void)
 {
     Node *new_head = read_students_from_file();
+    Node *tmp = new_head;
     int id;
 
     printf("\nEnter the id: ");
@@ -212,6 +223,13 @@ void *find_student_by_id()
 
     while (new_head->id != id)
         new_head = new_head->next;
+
+    if (tmp == NULL)
+    {
+        printf("Student not found\n");
+        system("pause");
+        main_menu();
+    }
 
     printf("Student Found\n");
     printf("-----------------------------------------------------------------------------------------\n");
@@ -275,7 +293,7 @@ void *delete_student_by_name(Node **head)
 
 void *delete_student_by_id(Node **head)
 {
-    char id;
+    int id;
     Node *tmp = *head;
     Node *curr = *head;
     Node *prev = *head;
@@ -285,13 +303,13 @@ void *delete_student_by_id(Node **head)
 
     if (tmp != NULL && id == tmp->id)
     {
-        printf("Student have been found");
+        printf("Student have been found\n");
         *head = curr->next;
         free(curr);
         curr = NULL;
         remove("Students.dat");
         add_student_node_to_file(*head);
-        printf("Student has been deleted");
+        printf("Student has been deleted\n");
         system("pause");
         main_menu();
     }
@@ -307,11 +325,11 @@ void *delete_student_by_id(Node **head)
         system("pause");
         main_menu();
     }
-
+    printf("Student have been found\n");
     prev->next = curr->next;
     free(curr);
     curr = NULL;
-    printf("Student has been deleted");
+    printf("Student has been deleted\n");
     remove("Students.dat");
     add_student_node_to_file(*head);
     system("pause");
@@ -333,11 +351,10 @@ void *update_student_by_name(Node *head)
     take_input(student_name);
 
     while (strcmp(tmp->name, student_name) != 0)
-    {
-        printf("OLD RECORD\n");
-        print_list(tmp);
         tmp = tmp->next;
-    }
+
+    printf("OLD RECORD\n");
+    print_list(tmp);
 
     printf("\t\nNew name: ");
     take_input(name);
@@ -377,7 +394,7 @@ void *update_student_by_name(Node *head)
 void *update_student_by_id(Node *head)
 {
     Node *tmp = head;
-    char student_id[20];
+    int student_id;
     char name[60];
     char age[10];
     char mail_id[29];
@@ -388,12 +405,11 @@ void *update_student_by_id(Node *head)
     printf("\nEnter the ID: ");
     scanf("%d", &student_id);
 
-    while (strcmp(tmp->name, student_id) != 0)
-    {
-        printf("OLD RECORD\n");
-        print_list(tmp);
+    while (tmp->id != student_id)
         tmp = tmp->next;
-    }
+
+    printf("OLD RECORD\n");
+    print_list(tmp);
 
     printf("\t\nNew name: ");
     take_input(name);
@@ -484,7 +500,7 @@ void *add_student_node_to_file(Node *head)
     fclose(file);
 }
 
-Node *read_students_from_file()
+Node *read_students_from_file(void)
 {
 
     Node *tmp = malloc(sizeof(Node));

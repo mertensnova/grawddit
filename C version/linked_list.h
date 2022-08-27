@@ -15,22 +15,21 @@ typedef struct student
 
 } Node;
 
-void set_time();
-void take_input();
-Node *insert_student_node_at_head(Node *head, Node *node_to_insert);
+int random_id(void);
+void set_time(void);
+void take_input(char *str);
+void main_menu(void);
 void *insert_student_node_at_tail(Node *head, Node *node_to_insert);
 void *print_list(Node *head);
 void *add_student_node_to_file(Node *head);
-Node *create_student_node();
-Node *read_students_from_file();
-int random_id();
-void *find_student_by_name();
-void *find_student_by_id();
+void *find_student_by_name(void);
+void *find_student_by_id(void);
 void *delete_student_by_name(Node **head);
 void *delete_student_by_id(Node **head);
 void *update_student_by_name(Node *head);
 void *update_student_by_id(Node *head);
-void take_input();
-void main_menu(void);
+Node *read_students_from_file(void);
+Node *create_student_node(void);
+Node *insert_student_node_at_head(Node *head, Node *node_to_insert);
 
 #endif
