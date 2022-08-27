@@ -42,11 +42,18 @@ void main_menu(void)
         head = insert_student_node_at_head(head, tmp);
 
         add_student_node_to_file(head);
+
+        system("pause");
+        main_menu();
+
         break;
     case 2:
         system("cls");
         Node *new_head_1 = read_students_from_file();
         print_list(new_head_1);
+
+        system("pause");
+        main_menu();
 
         break;
     case 3:
@@ -62,10 +69,12 @@ void main_menu(void)
         if (strcmp(choice, "id") == 0)
             find_student_by_id();
 
-        printf("Wrong choice.\nTry again");
-        printf("Press Enter to Continue...");
-        getchar();
-        main_menu();
+        else
+        {
+            printf("Wrong choice.\nTry again.\n");
+            system("pause");
+            main_menu();
+        }
 
         break;
 
@@ -82,11 +91,11 @@ void main_menu(void)
 
         if (strcmp(choice1, "id") == 0)
             delete_student_by_id(&new_head_2);
+
         else
         {
-            printf("Wrong choice.\nTry again");
-            printf("Press Enter to Continue...");
-            getchar();
+            printf("Wrong choice.\nTry again.\n");
+            system("pause");
             main_menu();
         }
 
@@ -106,11 +115,12 @@ void main_menu(void)
         if (strcmp(choice1, "id") == 0)
             update_student_by_id(new_head_3);
 
-        printf("Wrong choice.\nTry again");
-        printf("Press Enter to Continue...");
-        getchar();
-        main_menu();
-
+        else
+        {
+            printf("Wrong choice.\nTry again.\n");
+            system("pause");
+            main_menu();
+        }
         break;
 
     default:
@@ -188,8 +198,7 @@ void *find_student_by_name()
     printf("Hostel Name:%s \n", new_head->hostel_name);
     printf("Created At:%s \n", new_head->created_at);
 
-    printf("\n\nPress Enter to Continue...");
-    getchar();
+    system("pause");
     main_menu();
 };
 
@@ -215,8 +224,7 @@ void *find_student_by_id()
     printf("Hostel Name:%s \n", new_head->hostel_name);
     printf("Created At:%s \n", new_head->created_at);
 
-    printf("\n\nPress Enter to Continue...");
-    getchar();
+    system("pause");
     main_menu();
 };
 
@@ -238,6 +246,8 @@ void *delete_student_by_name(Node **head)
         remove("Students.dat");
         add_student_node_to_file(*head);
         printf("Student has been deleted");
+        system("pause");
+        main_menu();
     }
 
     while (tmp != NULL && strcmp(tmp->name, name) != 0)
@@ -249,19 +259,18 @@ void *delete_student_by_name(Node **head)
 
     if (tmp == NULL)
     {
-        printf("Student not found.\nTry again\n.");
-        printf("Press Enter to Continue...");
-        getchar();
-
+        system("pause");
         main_menu();
     }
 
     prev->next = curr->next;
     free(curr);
     curr = NULL;
-    printf("Student has been deleted");
+    printf("Student has been deleted.\n");
     remove("Students.dat");
     add_student_node_to_file(*head);
+    system("pause");
+    main_menu();
 }
 
 void *delete_student_by_id(Node **head)
@@ -271,7 +280,7 @@ void *delete_student_by_id(Node **head)
     Node *curr = *head;
     Node *prev = *head;
 
-    printf("\nEnter the name: ");
+    printf("\nEnter the id: ");
     scanf("%d", &id);
 
     if (tmp != NULL && id == tmp->id)
@@ -283,6 +292,8 @@ void *delete_student_by_id(Node **head)
         remove("Students.dat");
         add_student_node_to_file(*head);
         printf("Student has been deleted");
+        system("pause");
+        main_menu();
     }
 
     while (tmp != NULL && tmp->id != id)
@@ -293,10 +304,7 @@ void *delete_student_by_id(Node **head)
     }
     if (tmp == NULL)
     {
-        printf("Student not found.\nTry again\n.");
-        printf("Press Enter to Continue...");
-        getchar();
-
+        system("pause");
         main_menu();
     }
 
@@ -306,6 +314,8 @@ void *delete_student_by_id(Node **head)
     printf("Student has been deleted");
     remove("Students.dat");
     add_student_node_to_file(*head);
+    system("pause");
+    main_menu();
 }
 
 void *update_student_by_name(Node *head)
@@ -359,6 +369,9 @@ void *update_student_by_name(Node *head)
 
     remove("Students.dat");
     add_student_node_to_file(head);
+
+    system("pause");
+    main_menu();
 }
 
 void *update_student_by_id(Node *head)
@@ -412,6 +425,8 @@ void *update_student_by_id(Node *head)
 
     remove("Students.dat");
     add_student_node_to_file(head);
+    system("pause");
+    main_menu();
 }
 
 Node *insert_student_node_at_head(Node *head, Node *node_to_insert)
