@@ -1,5 +1,5 @@
-#ifndef LINKED_LIST_H
-#define LINKED_LIST_H
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
 
 typedef struct student
 {
@@ -16,9 +16,7 @@ typedef struct student
 } Node;
 
 int random_id(void);
-void set_time(void);
 void take_input(char *str);
-void main_menu(void);
 void *insert_student_node_at_tail(Node *head, Node *node_to_insert);
 void *print_list(Node *head);
 void *add_student_node_to_file(Node *head);

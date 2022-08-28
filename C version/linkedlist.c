@@ -4,130 +4,129 @@
 #include <time.h>
 #include <ctype.h>
 #include <unistd.h>
-#include "linked_list.h"
+#include "linkedlist.h"
 
 int random_id(void)
 {
-    srand(time(NULL));
     int RandIndex = rand() % 999;
     return RandIndex;
 }
 
 void main_menu(void)
 {
-    Node *head = NULL;
-    Node *tmp = NULL;
-    int choice;
+    // Node *head = NULL;
+    // Node *tmp = NULL;
+    // int choice;
 
-    system("cls");
+    // system("cls");
 
-    printf("\n\n\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb HOSTEL MANAGMENT SYSTEM \xdb\xdb\xdb\xdb\xdb\xdb");
-    printf("\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n\n");
-    printf("\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n\n\n");
-    printf("<1> Add a new student: \n\n");
-    printf("<2> View all students: \n\n");
-    printf("<3> Search a student: \n\n");
-    printf("<4> Delete a student: \n\n");
-    printf("<5> Update a student: \n\n");
-    printf("<6> Exit Program: \n\n");
+    // printf("\n\n\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb HOSTEL MANAGMENT SYSTEM \xdb\xdb\xdb\xdb\xdb\xdb");
+    // printf("\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n\n");
+    // printf("\t\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\n\n\n");
+    // printf("<1> Add a new student: \n\n");
+    // printf("<2> View all students: \n\n");
+    // printf("<3> Search a student: \n\n");
+    // printf("<4> Delete a student: \n\n");
+    // printf("<5> Update a student: \n\n");
+    // printf("<6> Exit Program: \n\n");
 
-    printf("Choose a number: ");
-    scanf("%d", &choice);
+    // printf("Choose a number: ");
+    // scanf("%d", &choice);
 
-    switch (choice)
-    {
-    case 1:
-        system("cls");
+    // switch (choice)
+    // {
+    // case 1:
+    //     system("cls");
 
-        tmp = create_student_node();
-        head = insert_student_node_at_head(head, tmp);
+    //     tmp = create_student_node();
+    //     head = insert_student_node_at_head(head, tmp);
 
-        add_student_node_to_file(head);
+    //     add_student_node_to_file(head);
 
-        system("pause");
-        main_menu();
+    //     system("pause");
+    //     main_menu();
 
-        break;
-    case 2:
-        system("cls");
-        Node *new_head_1 = read_students_from_file();
-        print_list(new_head_1);
+    //     break;
+    // case 2:
+    //     system("cls");
+    //     Node *new_head_1 = read_students_from_file();
+    //     print_list(new_head_1);
 
-        system("pause");
-        main_menu();
+    //     system("pause");
+    //     main_menu();
 
-        break;
-    case 3:
-        system("cls");
-        char choice[20];
+    //     break;
+    // case 3:
+    //     system("cls");
+    //     char choice[20];
 
-        printf("Find by name or id: ");
-        scanf("%s", &choice);
+    //     printf("Find by name or id: ");
+    //     scanf("%s", &choice);
 
-        if (strcmp(choice, "name") == 0)
-            find_student_by_name();
+    //     if (strcmp(choice, "name") == 0)
+    //         find_student_by_name();
 
-        if (strcmp(choice, "id") == 0)
-            find_student_by_id();
+    //     if (strcmp(choice, "id") == 0)
+    //         find_student_by_id();
 
-        else
-        {
-            printf("Wrong choice.\nTry again.\n");
-            system("pause");
-            main_menu();
-        }
+    //     else
+    //     {
+    //         printf("Wrong choice.\nTry again.\n");
+    //         system("pause");
+    //         main_menu();
+    //     }
 
-        break;
+    //     break;
 
-    case 4:
-        system("cls");
-        char choice1[20];
-        Node *new_head_2 = read_students_from_file();
+    // case 4:
+    //     system("cls");
+    //     char choice1[20];
+    //     Node *new_head_2 = read_students_from_file();
 
-        printf("Delete student by name or id: ");
-        scanf("%s", &choice1);
+    //     printf("Delete student by name or id: ");
+    //     scanf("%s", &choice1);
 
-        if (strcmp(choice1, "name") == 0)
-            delete_student_by_name(&new_head_2);
+    //     if (strcmp(choice1, "name") == 0)
+    //         delete_student_by_name(&new_head_2);
 
-        if (strcmp(choice1, "id") == 0)
-            delete_student_by_id(&new_head_2);
+    //     if (strcmp(choice1, "id") == 0)
+    //         delete_student_by_id(&new_head_2);
 
-        else
-        {
-            printf("Wrong choice.\nTry again.\n");
-            system("pause");
-            main_menu();
-        }
+    //     else
+    //     {
+    //         printf("Wrong choice.\nTry again.\n");
+    //         system("pause");
+    //         main_menu();
+    //     }
 
-        break;
+    //     break;
 
-    case 5:
-        system("cls");
-        char choice2[20];
-        Node *new_head_3 = read_students_from_file();
+    // case 5:
+    //     system("cls");
+    //     char choice2[20];
+    //     Node *new_head_3 = read_students_from_file();
 
-        printf("Update student by name or id: ");
-        scanf("%s", &choice1);
+    //     printf("Update student by name or id: ");
+    //     scanf("%s", &choice1);
 
-        if (strcmp(choice1, "name") == 0)
-            update_student_by_name(new_head_3);
+    //     if (strcmp(choice1, "name") == 0)
+    //         update_student_by_name(new_head_3);
 
-        if (strcmp(choice1, "id") == 0)
-            update_student_by_id(new_head_3);
+    //     if (strcmp(choice1, "id") == 0)
+    //         update_student_by_id(new_head_3);
 
-        else
-        {
-            printf("Wrong choice.\nTry again.\n");
-            system("pause");
-            main_menu();
-        }
-        break;
+    //     else
+    //     {
+    //         printf("Wrong choice.\nTry again.\n");
+    //         system("pause");
+    //         main_menu();
+    //     }
+    //     break;
 
-    default:
-        exit(1);
-        break;
-    }
+    // default:
+    //     exit(1);
+    //     break;
+    // }
 }
 
 void take_input(char *str)
@@ -142,6 +141,7 @@ void take_input(char *str)
 
 Node *create_student_node(void)
 {
+    srand(time(NULL));
     Node *new = malloc(sizeof(Node));
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
