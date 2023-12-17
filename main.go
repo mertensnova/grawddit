@@ -1,19 +1,10 @@
 package main
 
+import "fmt"
+
 
 var base_url string = "https://reddit.com"
 
-func unique(intSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range intSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
 func main() {
 
 	var data []Data
@@ -21,11 +12,11 @@ func main() {
 	url := base_url + "/r/TwoSentenceHorror/top/?t=day"
 
 	html := SendRequests(url)
-	links := unique(LinkGrabber(html))
+	links := Unique(LinkGrabber(html))
 
 	for _, v := range links {
-		content := SendRequests(base_url + v)
-
+		content := Scroller(base_url + v)
+        fmt.Println(v)
         id := GetText(content,"id")
 		var d = Data{
             ID : id,
