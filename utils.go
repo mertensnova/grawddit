@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,40 +12,45 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tebeka/selenium"
+	"github.com/chromedp/chromedp"
+
 	"golang.org/x/net/html"
 )
 
 func Scroller(target string) string {
+	// Create a new context
+	ctx, cancel := chromedp.NewContext(context.Background())
+	defer cancel()
 
-    fmt.Println("PR inS")
-	caps := selenium.Capabilities{"browserName": "chrome"}
-	wd, err := selenium.NewRemote(caps, "http://192.168.1.112:4444/wd/hub")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer wd.Quit()
-
-	err = wd.Get(target)
-	if err != nil {
+	// Navigate to the target website
+	if err := chromedp.Run(ctx, chromedp.Navigate("https://example.com")); err != nil {
 		log.Fatal(err)
 	}
 
-	for i := 0; i < 3; i++ {
-		time.Sleep(2 * time.Second) 
-		_, err := wd.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
+	// Wait for dynamic content to load (you may need to adjust the timeout)
+	time.Sleep(5 * time.Second)
 
-	content, err := wd.PageSource()
-	if err != nil {
+	// Scroll down to trigger the loading of more content
+    if err := chromedp.Run(ctx, chromedp.ActionFunc(func(ctx context.Context) error {
+		// Scroll down by executing JavaScript
+		err := chromedp.Evaluate(ctx, "window.scrollTo(0, document.body.scrollHeight);", nil)
+		return err
+	})); err != nil {
 		log.Fatal(err)
 	}
 
-    fmt.Println(content)
-    return content
+	// Wait for the additional content to load (you may need to adjust the timeout)
+	time.Sleep(5 * time.Second)
+
+	// Extract the HTML content of the entire page
+	var htmlContent string
+	if err := chromedp.Run(ctx, chromedp.OuterHTML("html", &htmlContent)); err != nil {
+		log.Fatal(err)
+	}
+
+	// Print or use the HTML content
+	fmt.Println(htmlContent)
+	return htmlContent
 }
 
 func LinkGrabber(value string) []string {
@@ -142,7 +148,3 @@ func Unique(intSlice []string) []string {
 	}
 	return list
 }
-
-
-
-
