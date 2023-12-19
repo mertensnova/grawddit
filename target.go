@@ -14,6 +14,8 @@ import (
 
 func Scroller(target string) string {
 
+	fmt.Println("Scrolling the page...")
+
 	ctx, cancel := chromedp.NewContext(
 		context.Background(),
 	)
@@ -23,7 +25,7 @@ func Scroller(target string) string {
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(target),
 		chromedp.Evaluate(ReadScripts("./script.js"), nil),
-		chromedp.Sleep(2000*time.Millisecond),
+		chromedp.Sleep(3000*time.Millisecond),
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			rootNode, err := dom.GetDocument().Do(ctx)
 			if err != nil {
@@ -63,10 +65,7 @@ func SendRequests(value string) string {
 
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
-		return ""
 	}
 
 	return string(body)
 }
-
-

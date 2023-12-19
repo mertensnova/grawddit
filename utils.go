@@ -2,17 +2,46 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
+	"time"
 )
 
+func WritetoJSON(data []Data, subreddit string) {
 
-func WritetoJSON(data interface{}){
+    fmt.Println("\n\nWriting to JSON...")
+	file_name := subreddit + ".json"
+	file, err := os.Create(file_name)
 
+	if err != nil {
+		fmt.Println("Error creating file:", err)
+		return
+	}
 
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+
+	if err := encoder.Encode(data); err != nil {
+		log.Fatalln("Error encoding JSON:", err)
+		return
+	}
+
+	return
+}
+
+func ParseDate(date string) string {
+	parsedTime, err := time.Parse(time.RFC3339Nano, date)
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+
+	formattedString := parsedTime.Format("January 2, 2006 at 15:04:05 MST")
+	return formattedString
 }
 
 func RandomUserAgents() string {
@@ -39,7 +68,6 @@ func RandomUserAgents() string {
 
 	return lines[r]
 }
-
 
 func Unique(intSlice []string) []string {
 	keys := make(map[string]bool)

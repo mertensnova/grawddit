@@ -1,38 +1,36 @@
-# Hostel Management System
+# Grawddit - Reddit Top Posts Scraper
 
-Hostel Management System is based on a concept to keep track of information on college students who reside in various hostel buildings. This mini project Hostel management system project is developed using C and Pyhton programming languages.
+Grawddit is a lightweight tool that fetches the top posts of the day from a specified subreddit on Reddit, focusing on those with the most upvotes.
 
-## 🚀 About Me
+## Usage
 
-I'm a software developer.
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/nyx6965/grawddit.git
+   cd grawddit
+   ```
 
-## Authors
+2. **Run the Project:**
+   ```bash
+   ./build.sh
+    grawddit -subreddit yourdesiredsubreddit
+   ```
+   Replace `yourdesiredsubreddit` with the name of the subreddit you want to scrape.
+   There is no support of scrapping images and videos yet. So that enter a subreddit the posts them.
 
-- [Amr Ashebo](https://amrashebo.vercel.app/)
 
-## Run Locally
+## Configuration
 
-Clone the project
+You can customize the project by modifying the source code or by passing command-line arguments:
 
-```bash
-  git clone https://github.com/amr8644/Hostel-Management-System
-```
+- `-subreddit`: Specify the subreddit you want to scrape (e.g., `-subreddit worldnews`).
 
-Go to the project directory
+## Contribution
 
-```bash
-  cd Hostel-Management-System
+Feel free to contribute to the project by submitting bug reports or feature requests.
 
-```
+## License
 
-For C
+This project is licensed under the MIT License.
 
-```bash
-  gcc main.c linkedlist.c
-```
-
-For Python
-
-```bash
-  py main.py
-```
+Happy scraping! 🚀

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -9,14 +8,15 @@ import (
 )
 
 type Data struct {
-	ID       string
-	Title    string
-	Post     string
-	Score    string
-	UserName string
+	ID        string `json:"id"`
+	Title     string `json:"title"`
+	Post      string `json:"post"`
+	Upvotes   string `json:"upvotes"`
+	Author    string `json:"author"`
+	CreatedAt string `json:"created_at"`
 }
 
-func GetPost(content string, id string) string {
+func GetSubRedditPost(content string, id string) string {
 	reader := strings.NewReader(content)
 	doc, err := html.Parse(reader)
 
@@ -58,11 +58,10 @@ func GetPost(content string, id string) string {
 	}
 
 	f(doc)
-    fmt.Println(post)
 	return post
 }
 
-func GetText(content string, attr string) string {
+func GetSubRedditData(content string, attr string) string {
 
 	var text string
 	reader := strings.NewReader(content)
@@ -92,8 +91,9 @@ func GetText(content string, attr string) string {
 	return text
 }
 
-func LinkGrabber(value string) []string {
+func LinkGrabber(value string, subreddit string) []string {
 
+    suffix := "r/" + subreddit + "/comments"
 	var links []string
 	doc, err := html.Parse(strings.NewReader(value))
 
@@ -106,7 +106,7 @@ func LinkGrabber(value string) []string {
 		if n.Type == html.ElementNode && n.Data == "a" {
 			for _, a := range n.Attr {
 				if a.Key == "href" {
-					if strings.Contains(a.Val, "r/TwoSentenceHorror/comments") {
+					if strings.Contains(a.Val,suffix) {
 						links = append(links, a.Val)
 					}
 					break
