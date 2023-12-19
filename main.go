@@ -1,8 +1,5 @@
 package main
 
-import "fmt"
-
-
 var base_url string = "https://reddit.com"
 
 func main() {
@@ -11,21 +8,19 @@ func main() {
 
 	url := base_url + "/r/TwoSentenceHorror/top/?t=day"
 
-	html := SendRequests(url)
+	html := Scroller(url)
 	links := Unique(LinkGrabber(html))
 
 	for _, v := range links {
-		content := Scroller(base_url + v)
-        fmt.Println(v)
-        id := GetText(content,"id")
+		content := SendRequests(base_url + v)
+		id := GetText(content, "id")
 		var d = Data{
-            ID : id,
-			Title: GetText(content,"post-title"),
-            Score: GetText(content,"score"),
-            UserName: GetText(content,"author"),
+			ID:       id,
+			Title:    GetText(content, "post-title"),
+			Score:    GetText(content, "score"),
+			UserName: GetText(content, "author"),
+            Post: GetPost(content, id),
 		}
-
-         GetPost(content,id)
-        data = append(data, d)
+		data = append(data, d)
 	}
 }
