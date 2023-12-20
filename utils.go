@@ -11,10 +11,16 @@ import (
 	"time"
 )
 
+func CreateDir(name string) {
+	if err := os.Mkdir(name, os.ModePerm); err != nil {
+		log.Println(err)
+	}
+}
+
 func WritetoJSON(data []Data, subreddit string) {
 
-    fmt.Println("\n\nWriting to JSON...")
-	file_name := subreddit + ".json"
+	fmt.Println("\n\nWriting to JSON...")
+	file_name := "./" + subreddit + "/" + subreddit + ".json"
 	file, err := os.Create(file_name)
 
 	if err != nil {

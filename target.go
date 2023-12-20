@@ -25,7 +25,7 @@ func Scroller(target string) string {
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(target),
 		chromedp.Evaluate(ReadScripts("./script.js"), nil),
-		chromedp.Sleep(3000*time.Millisecond),
+		chromedp.Sleep(3000 * time.Millisecond),
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			rootNode, err := dom.GetDocument().Do(ctx)
 			if err != nil {
