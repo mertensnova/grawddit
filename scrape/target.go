@@ -1,9 +1,9 @@
-package main
+package scrape
 
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"time"
@@ -12,20 +12,23 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-func Scroller(target string) string {
+var script = `const scrollInterval = setInterval(() => {
+    window.scrollTo(0, document.body.scrollHeight)
+}, 500)
+`
 
-	fmt.Println("Scrolling the page...")
+func Scroller(target string) (string, error) {
+	log.Println("Scrolling the page...")
 
 	ctx, cancel := chromedp.NewContext(
 		context.Background(),
 	)
 	defer cancel()
-
 	var html string
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(target),
-		chromedp.Evaluate(ReadScripts("./script.js"), nil),
-		chromedp.Sleep(3000 * time.Millisecond),
+		chromedp.Evaluate(script, nil),
+		chromedp.Sleep(3000*time.Millisecond),
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			rootNode, err := dom.GetDocument().Do(ctx)
 			if err != nil {
@@ -37,35 +40,33 @@ func Scroller(target string) string {
 	)
 
 	if err != nil {
-		log.Fatal("Error while performing the automation logic:", err)
+		return "", fmt.Errorf("error while performing the automation logic: %w", err)
+
 	}
-	return html
+	return html, nil
 }
 
-func SendRequests(value string) string {
-
+func SendRequests(value string) (string, error) {
 	client := &http.Client{
 		Timeout: 30 * time.Second,
 	}
 
 	request, err := http.NewRequest("GET", value, nil)
-	request.Header.Set("User-Agent", RandomUserAgents())
-
 	if err != nil {
-		log.Fatalln(err)
+		return "", fmt.Errorf("error creating request: %w", err)
 	}
 
+	request.Header.Set("User-Agent", RandomUserAgent())
 	response, err := client.Do(request)
-
 	if err != nil {
-		log.Fatalln(err)
+		return "", fmt.Errorf("error sending request: %w", err)
+	}
+	defer response.Body.Close()
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return "", fmt.Errorf("error reading response body: %w", err)
 	}
 
-	body, err := ioutil.ReadAll(response.Body)
-
-	if err != nil {
-		fmt.Println("Error reading response body:", err)
-	}
-
-	return string(body)
+	return string(body), nil
 }

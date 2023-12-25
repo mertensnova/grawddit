@@ -1,10 +1,8 @@
-package main
+package scrape
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
@@ -17,62 +15,37 @@ func CreateDir(name string) {
 	}
 }
 
-func WritetoJSON(data []Data, subreddit string) {
-
-	fmt.Println("\n\nWriting to JSON...")
+func WritetoJSON(data []Data, subreddit string) error {
+	log.Println("Writing to JSON...")
 	file_name := "./" + subreddit + "/" + subreddit + ".json"
+
 	file, err := os.Create(file_name)
-
 	if err != nil {
-		fmt.Println("Error creating file:", err)
-		return
-	}
+		return fmt.Errorf("error creating file: %w", err)
 
+	}
 	defer file.Close()
 
 	encoder := json.NewEncoder(file)
-
 	if err := encoder.Encode(data); err != nil {
-		log.Fatalln("Error encoding JSON:", err)
-		return
+		return fmt.Errorf("error encoding JSON: %w", err)
 	}
-
-	return
+	return nil
 }
 
-func ParseDate(date string) string {
+func ParseDate(date string) (string, error) {
 	parsedTime, err := time.Parse(time.RFC3339Nano, date)
 	if err != nil {
-		fmt.Println("Error:", err)
+		return "", fmt.Errorf("error parsing date: %w", err)
 	}
 
 	formattedString := parsedTime.Format("January 2, 2006 at 15:04:05 MST")
-	return formattedString
+	return formattedString, nil
 }
 
-func RandomUserAgents() string {
-
-	file, err := os.Open("user-agent.txt")
-
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-	}
-
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	var lines []string
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	if len(lines) == 0 {
-		fmt.Println("File is empty")
-	}
-
-	r := rand.Intn(len(lines))
-
-	return lines[r]
+func RandomUserAgent() string {
+	r := rand.Intn(len(UserAgents))
+	return UserAgents[r]
 }
 
 func Unique(intSlice []string) []string {
@@ -85,12 +58,4 @@ func Unique(intSlice []string) []string {
 		}
 	}
 	return list
-}
-
-func ReadScripts(srcipt string) string {
-	content, err := ioutil.ReadFile(srcipt)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(content)
 }

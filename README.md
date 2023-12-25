@@ -12,12 +12,11 @@ Grawddit is a lightweight tool that fetches the top posts of the day from a spec
 
 2. **Run the Project:**
    ```bash
-   ./build.sh
+    go build
     grawddit -subreddit yourdesiredsubreddit -limit 10 -sort new
    ```
    Replace `yourdesiredsubreddit` with the name of the subreddit you want to scrape.
    There is no support of scrapping images and videos yet. So that enter a subreddit the posts them.
-
 
 ## Configuration
 
