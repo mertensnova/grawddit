@@ -15,9 +15,8 @@ func CreateDir(name string) {
 	}
 }
 
-func WritetoJSON(data []Data, subreddit string) error {
+func WritetoJSON(data []Data, file_name string) error {
 	log.Println("Writing to JSON...")
-	file_name := "./" + subreddit + "/" + subreddit + ".json"
 
 	file, err := os.Create(file_name)
 	if err != nil {

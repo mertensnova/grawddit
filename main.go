@@ -21,12 +21,12 @@ func main() {
 
 	flag.Parse()
 
-	scrape.CreateDir(subreddit)
+	baseDataDir := "./data"
 	data, err := scrape.Start(subreddit, limit, category)
 	if err != nil {
 		log.Println(err)
 	}
-	if err := scrape.WritetoJSON(data, subreddit); err != nil {
+	if err := scrape.WritetoJSON(data, baseDataDir + "/" + subreddit + ".json" ); err != nil {
 		log.Println(err)
 	}
 
