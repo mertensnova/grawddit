@@ -4,19 +4,33 @@ Grawddit is a lightweight tool that fetches the top posts of the day from a spec
 
 ## Usage
 
-1. **Clone the Repository:**
+### 1. Clone the Repository:
    ```bash
    git clone https://github.com/nyx6965/grawddit.git
    cd grawddit
    ```
 
-2. **Run the Project:**
+### 2. Run the Project:
+  
+#### 2.1 Native Golang environment
    ```bash
     go build
     grawddit -subreddit yourdesiredsubreddit -limit 10 -sort new
    ```
    Replace `yourdesiredsubreddit` with the name of the subreddit you want to scrape.
    There is no support of scrapping images and videos yet. So that enter a subreddit the posts them.
+
+#### 2.2 Docker environment
+   ```
+   docker build -t grawddit:latest .
+   docker run -v ./data:/app/data -t grawddit:latest
+   ```
+   This requires docker to be installed on your machine. The data scraped by the tool is available in the `data` directory post run completion.
+   
+   The subreddit argument works as follows
+   ```
+   docker run -v ./data:/app/data -t grawddit:latest -subreddit yourdesiredsubreddit -limit 10 -sort new
+   ``` 
 
 ## Configuration
 
